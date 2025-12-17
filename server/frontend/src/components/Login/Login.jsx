@@ -38,36 +38,56 @@ const Login = ({ onClose }) => {
   if (!open) {
     window.location.href = "/";
   };
-  
-
+ 
   return (
-    <div>
-      <Header/>
-    <div onClick={onClose}>
-      <div
-        onClick={(e) => {
-          e.stopPropagation();
-        }}
-        className='modalContainer'
-      >
-          <form className="login_panel" style={{}} onSubmit={login}>
-              <div>
-              <span className="input_field">Username </span>
-              <input type="text"  name="username" placeholder="Username" className="input_field" onChange={(e) => setUserName(e.target.value)}/>
-              </div>
-              <div>
-              <span className="input_field">Password </span>
-              <input name="psw" type="password"  placeholder="Password" className="input_field" onChange={(e) => setPassword(e.target.value)}/>            
-              </div>
-              <div>
-              <input className="action_button" type="submit" value="Login"/>
-              <input className="action_button" type="button" value="Cancel" onClick={()=>setOpen(false)}/>
-              </div>
-              <a className="loginlink" href="/register">Register Now</a>
+    <>
+      <Header />
+
+      <div className="login-overlay" onClick={onClose}>
+        <div
+          className="login-panel"
+          onClick={(e) => e.stopPropagation()}
+        >
+          <form onSubmit={login}>
+            <div className="login-input">
+              <label>Username</label>
+              <input
+                type="text"
+                placeholder="Username"
+                onChange={(e) => setUserName(e.target.value)}
+              />
+            </div>
+
+            <div className="login-input">
+              <label>Password</label>
+              <input
+                type="password"
+                placeholder="Password"
+                onChange={(e) => setPassword(e.target.value)}
+              />
+            </div>
+
+            <div className="login-actions">
+              <input
+                className="login-button"
+                type="submit"
+                value="Login"
+              />
+              <input
+                className="login-button secondary"
+                type="button"
+                value="Cancel"
+                onClick={() => setOpen(false)}
+              />
+            </div>
+
+            <a className="login-link" href="/register">
+              Register Now
+            </a>
           </form>
+        </div>
       </div>
-    </div>
-    </div>
+    </>
   );
 };
 
