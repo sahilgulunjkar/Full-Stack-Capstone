@@ -127,3 +127,15 @@ dmypy.json
 
 # Pyre type checker
 .pyre/
+
+
+# Project-specific
+djangoenv/
+node_modules/
+
+# Frontend build output
+frontend/build/
+frontend/dist/
+
+# VS Code (optional but recommended)
+.vscode/
