@@ -17,9 +17,9 @@ const PostReview = () => {
   let root_url = curr_url.substring(0,curr_url.indexOf("postreview"));
   let params = useParams();
   let id =params.id;
-  let dealer_url = root_url+`djangoapp/dealer/${id}`;
-  let review_url = root_url+`djangoapp/add_review`;
-  let carmodels_url = root_url+`djangoapp/get_cars`;
+  let dealer_url = root_url+`djangoapp/dealer/${id}/`;
+  let review_url = root_url+`djangoapp/add_review/`;
+  let carmodels_url = root_url+`djangoapp/get_cars/`;
 
   const postreview = async ()=>{
     let name = sessionStorage.getItem("firstname")+" "+sessionStorage.getItem("lastname");
@@ -57,33 +57,34 @@ const PostReview = () => {
   });
 
   const json = await res.json();
-  if (json.status === 200) {
-      window.location.href = window.location.origin+"/dealer/"+id;
-  }
+
+if (json.status === 200) {
+  window.location.href = `/dealer/${id}/`;
+} else if (json.status === 403) {
+  alert("Please login to post a review");
+} else {
+  alert("Failed to post review");
+}
+
 
   }
-  const get_dealer = async ()=>{
-    const res = await fetch(dealer_url, {
-      method: "GET"
-    });
+  const get_dealer = async () => {
+    const res = await fetch(dealer_url);
     const retobj = await res.json();
-    
-    if(retobj.status === 200) {
-      let dealerobjs = Array.from(retobj.dealer)
-      if(dealerobjs.length > 0)
-        setDealer(dealerobjs[0])
+  
+    if (retobj.status === 200) {
+      setDealer(retobj.dealer);
     }
-  }
+  };
+  
 
-  const get_cars = async ()=>{
-    const res = await fetch(carmodels_url, {
-      method: "GET"
-    });
+  const get_cars = async () => {
+    const res = await fetch(carmodels_url);
     const retobj = await res.json();
-    
-    let carmodelsarr = Array.from(retobj.CarModels)
-    setCarmodels(carmodelsarr)
-  }
+    setCarmodels(retobj.CarModels || []);
+  };
+  
+
   useEffect(() => {
     get_dealer();
     get_cars();
